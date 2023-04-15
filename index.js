@@ -6,6 +6,16 @@ app.use(express.json());
 
 const alunos = require("./alunos");
 
+const fs = require("fs");
+
+//DB JSON
+function atualizarDados(alunos){
+    const dadosJson = JSON.stringify(alunos,null,2);
+    fs.writeFileSync("db.json",dadosJson)
+    console.log("Dados atualizados com sucesso")
+}
+
+
 //ROTA GET ALUNOS
 app.get("/alunos",(req,res)=>{
     let listaAlunos = alunos.alunos;
@@ -53,10 +63,10 @@ app.post("/alunos/atualizar/:index",(req,res)=>{
     } else {
         alunos.alunos[index].nome = nome;
         alunos.alunos[index].media = media;
+        atualizarDados(alunos.alunos);
         res.status(200).json({message:"Aluno atualizado com sucesso"})
     }
 })
-
 
 
 app.listen(3000,()=>{
