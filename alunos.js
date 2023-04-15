@@ -43,4 +43,8 @@ function filtroMedia(minMedia){
         aluno.media >= minMedia
     )};
 
-module.exports = {alunos,filtroNome,filtroMedia};
+function deletarAluno(index){
+    alunos.splice(index,1)
+}
+
+module.exports = {alunos,filtroNome,filtroMedia,deletarAluno};
