@@ -31,7 +31,7 @@ app.post("/alunos/novo",(req,res)=>{
 app.post("/alunos/deletar/:index",(req,res)=>{
     const index = Number(req.params.index);
     if(isNaN(index)){
-        res.status(404).json({message:"Index inválido"})
+        res.status(400).json({message:"Index inválido"})
     } else if(index < 0 | index >= alunos.alunos.length){
         res.status(404).json({message: "Aluno não encontrado"});
     } else {
@@ -40,6 +40,22 @@ app.post("/alunos/deletar/:index",(req,res)=>{
     }
 })
 
+//ROTA POST ALUNOS/ATUALIZAR
+app.post("/alunos/atualizar/:index",(req,res)=>{
+    const index = Number(req.params.index);
+    let {nome,media} = req.body;
+    if(isNaN(index)){
+        res.status(400).json({message:"Index inválido"})
+    } else if(index < 0 | index >= alunos.alunos.length){
+        res.status(404).json({message: "Aluno não encontrado"});
+    }  else if (nome === undefined | media === undefined) {
+        res.status(400).json({message:"Dados inválidos. Digite um nome e média válidos"})
+    } else {
+        alunos.alunos[index].nome = nome;
+        alunos.alunos[index].media = media;
+        res.status(200).json({message:"Aluno atualizado com sucesso"})
+    }
+})
 
 
 
